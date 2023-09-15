@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %} <!-- extends tells the html where to pull from -->
+<!-- block content and enblock content basically allow for the cutting and pasting of code
+removing a bunch of overlapping and repeating yourself -->
+{% block content %}
+    {% for post in posts %}
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">          <!--long af but u gotta chain from the beginning to the end-->
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted|date:'F d, Y' }}</small> <!-- look at django builtin keywords for codes -->
+          </div>
+          <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+    {% endfor %}
+{% endblock content %} <!-- defining content by putting it at the endblock -->
