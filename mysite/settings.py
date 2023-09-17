@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "blog.apps.BlogConfig",    # add each one of your applications to this installed apps list
     "crispy_forms",
+    "crispy_bootstrap5",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -129,7 +130,8 @@ MEDIA_URL = '/media/' # This is what creates the media folder for the profile pi
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'          # This is added to make our forms look better
+CRISPY_TEMPLATE_PACK = 'bootstrap5'      # yummm crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'blog-home'            # redirects after a successful login
 LOGIN_URL = 'login'                         # redirects the login_required url

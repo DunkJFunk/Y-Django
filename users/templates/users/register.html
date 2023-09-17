@@ -10,7 +10,7 @@ removing a bunch of overlapping and repeating yourself -->
                 <legend class="border-bottom mb-4">
                     Join Today
                 </legend>
-                {{ form.as_p }}  <!--in order to add specifications to the base form, its like html-->
+                {{ form|crispy }}  <!--in order to add specifications to the base form, its like html-->
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">
