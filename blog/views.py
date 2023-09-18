@@ -1,9 +1,10 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
-from django.shortcuts import render # this is god package   ADD THIS AT THE BEGINNING
+from django.shortcuts import render, get_object_or_404 # this is god package   ADD THIS AT THE BEGINNING
 from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView   # for class based views
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 
 def home(request): # ADD THIS FUNCTION AT THE BEGINNING
     context = {         # adding the 'context' or data to the site
@@ -19,6 +20,18 @@ class PostListView(ListView):
     template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'  # we say posts because thats what it is in the home template
     ordering = ['-date_posted']  # organizes from latest first instead of oldest first
+    paginate_by = 10
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'  # we say posts because thats what it is in the home template
+    ordering = ['-date_posted']  # organizes from latest first instead of oldest first
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username')) # settings the user object as the selected user of the url
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 class PostDetailView(DetailView):
     model = Post
@@ -60,3 +73,28 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # an admin page comes precreated so the user will automatically fit in
 
 # class based views are like views designed around objects, sort of like selecting a tweet and it shows you a more detailed version w comments n stuff
+
+# the shell code for Pagination examples/notes \/
+
+# In [2]: posts = ['1','2','3','4','5']
+# In [3]: p = Paginator(posts, 2)
+# In [4]: p.num_pages
+# Out[4]: 3
+# In [5]: for page in p.page_range:
+#             print(page)
+# 1
+# 2
+# 3
+# In [6]: p1 = p.page(1)
+# In [7]: p1
+# Out[7]: <Page 1 of 3>
+# In [8]: p1.number
+# Out[8]: 1
+# In [9]: p1.object_list
+# Out[9]: ['1', '2']
+# In [10]: p1.has_previous()
+# Out[10]: False
+# In [11]: p1.has_next()
+# Out[11]: True
+# In [12]: p1.next_page_number()
+# Out[12]: 2

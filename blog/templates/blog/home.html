@@ -7,7 +7,7 @@ removing a bunch of overlapping and repeating yourself -->
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">          <!--long af but u gotta chain from the beginning to the end-->
         <div class="media-body">
           <div class="article-metadata">
-            <a class="mr-2" href="#">{{ post.author }}</a>
+            <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_posted|date:'F d, Y' }}</small> <!-- look at django builtin keywords for codes -->
           </div>
           <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
@@ -15,4 +15,21 @@ removing a bunch of overlapping and repeating yourself -->
         </div>
       </article>
     {% endfor %}
+    {% if is_paginated %}
+      {% if page_obj.has_previous %}        <!--all code went over more detailed in the shell-->
+        <a href="?page=1" class="btn btn-outline-info mb-4">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-info mb-4">Previous</a>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a href="?page={{ num }}" class="btn btn-outline-info mb-4">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info mb-4">Next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-info mb-4">Last</a>
+    {% endif %}
+    {% endif %}
 {% endblock content %} <!-- defining content by putting it at the endblock -->
