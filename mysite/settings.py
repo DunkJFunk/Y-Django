@@ -135,3 +135,10 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'blog-home'            # redirects after a successful login
 LOGIN_URL = 'login'                         # redirects the login_required url
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'       # built in module for sending emails w django
+EMAIL_HOST = 'smtp.gmail.com'                                       # the type of email server/address we're sending it to
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('DB_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')
