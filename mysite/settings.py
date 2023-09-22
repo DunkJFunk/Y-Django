@@ -140,5 +140,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'       # built in m
 EMAIL_HOST = 'smtp.gmail.com'                                       # the type of email server/address we're sending it to
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('DB_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')
+EMAIL_HOST_USER = os.environ.get('DB_USER')                         # environment variables bcuz aint no one taking my password
+EMAIL_HOST_PASSWORD = os.environ.get('DB_PASS')                     # ez way to keep secure variables like passwords or api keys
