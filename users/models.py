@@ -11,8 +11,8 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-    def save(self):                         # overrides the save model
-        super().save()                          # saving the current image
+    def save(self, *args, **kwargs):            # overrides the save model
+        super().save(*args, **kwargs)           # saving the current image
         x = Image.open(self.image.path)         # opens the instance as a variable
         if x.height > 300 or x.width > 300:     # checking if its in the size range
             output_size = (300,300)             # the new size we want
